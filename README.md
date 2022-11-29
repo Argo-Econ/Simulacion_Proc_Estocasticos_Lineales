@@ -1,2 +1,2 @@
-# Simulacion_Proc_Estocasticos_Lineales
-Proyecto en R para la simulaci[on de procesos AR(p), MA(q) y ARMA(p,q)
+# Simulación procesos autoregresivos AR(p), Medias móviles MA(q), y procesos ARMA (p,q)
+Proyecto en R para la generación y simulación de distintos procesos estocásticos lineales.
