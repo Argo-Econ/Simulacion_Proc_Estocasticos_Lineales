@@ -21,9 +21,10 @@ getwd()
 
 
 # multiples graficos de proceso AR(1)
-phi_sec = seq(from = -0.94, to=0.94, 0.05)
+phi_sec = seq(from = -0.84, to=0.84, 0.05)
 
 # Ciclo para generar graficos
+i<-1
 for (i in 1:length(phi_sec)) {
   nombre <- paste("Grafico_Proc_AR(1)","_phi=",phi_sec[i],".png", sep ="")
   
@@ -33,7 +34,7 @@ for (i in 1:length(phi_sec)) {
   par(mfrow=c(1,3), las=1)
   plot(as.ts(AR_test), main="serie")
   acf(AR_test,lag.max = 18, main="FAC simple", ylab="", xlab="Rezago")
-  pacf(AR_test, lag.max = 18, main="FACP simple", ylab="", xlab="Rezago")
+  pacf(AR_test, lag.max = 18, main="FACP", ylab="", xlab="Rezago")
   dev.off()
   
 }
@@ -43,7 +44,7 @@ AR2 <- arima.sim(list(order(2,0,0), ar= c(0.5,0.3)), sd= sqrt(5), n=5000)
 grafico1 <- autoplot(as.ts(AR2)) + ylab("Serie") + xlab("tiempo")
 grafico2 <- Acf(as.ts(AR2), plot = F) %>% autoplot() + ylab("ACF - FAC") + xlab("rezago")
 grafico3 <- Pacf(as.ts(AR2), plot = F) %>% autoplot() + ylab("PACF - FACP") + xlab("rezago")
-windows()
+grDevices::windows() 
 gridExtra::grid.arrange(grafico1,grafico2,grafico3, nrow=1)
 
 
@@ -66,7 +67,7 @@ gridExtra::grid.arrange(grafico1,grafico2,grafico3, nrow=1)
 # -----------------------------------------------------------------------------#
 
 # multiples graficos de proceso MA(1)
-theta_sec = seq(from = -0.94, to=0.94, 0.05)
+theta_sec = seq(from = -0.98, to=0.95, 0.01)
 
 # Ciclo for
 
@@ -156,7 +157,7 @@ for (t in 2:tiempo) {
   y[t] <- y[t-1] + a[t]
 }
 
-grafico1 <- autoplot(as.ts(y), main("serie")) + ylab("Serie") + xlab("tiempo")
+grafico1 <- autoplot(as.ts(y)) + ylab("Serie") + xlab("tiempo")
 grafico2 <- Acf(as.ts(y), plot = F) %>% autoplot() + ylab("ACF - FAC") + xlab("rezago")
 grafico3 <- Pacf(as.ts(y), plot = F) %>% autoplot() + ylab("PACF - FACP") + xlab("rezago")
 windows()
@@ -167,8 +168,8 @@ gridExtra::grid.arrange(grafico1,grafico2,grafico3, nrow=1)
 # ---------------------------------------------------------------------------
 # Simulación caminata aleatoria con deriva "drift"
 # ---------------------------------------------------------------------------
-nu <- -0.3
-beta <- 0.0005
+nu <- 1
+beta <- 0.0003
 
 for (t in 2:tiempo) {
   y[t] <- nu + beta*t + y[t-1] + a[t]
